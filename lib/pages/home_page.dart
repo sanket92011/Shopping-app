@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/models/products_model.dart';
+import 'package:shopping_app/pages/products_details_page.dart';
 import 'package:shopping_app/widgets/product_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -94,18 +96,31 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  final product = products;
-                  return ProductCard(
-                      productName: product[index]['title'].toString(),
-                      productPrice: product[index]['price'].toString(),
-                      productImage: product[index]['imageUrl'].toString());
-                },
-                itemCount: products.length,
+            if (selectedChip == filters[0])
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return ProductCard(
+                        onClick: () {
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) {
+                                return ProductsDetailsPage(product: product);
+                              },
+                            ),
+                          );
+                        },
+                        productName: product['title'] as String,
+                        productPrice: product['price'].toString(),
+                        productImage: product['imageUrl'] as String);
+                  },
+                  itemCount: products.length,
+                ),
               ),
-            ),
+            if (selectedChip == filters[1]) const Text("Addidas Section"),
+            if (selectedChip == filters[2]) const Text("Nike Section"),
+            if (selectedChip == filters[3]) const Text("Bata Section"),
           ],
         ),
       ),
