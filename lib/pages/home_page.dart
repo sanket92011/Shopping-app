@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/models/products_model.dart';
 import 'package:shopping_app/widgets/product_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -93,7 +94,18 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const ProductCard()
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final product = products;
+                  return ProductCard(
+                      productName: product[index]['title'].toString(),
+                      productPrice: product[index]['price'].toString(),
+                      productImage: product[index]['imageUrl'].toString());
+                },
+                itemCount: products.length,
+              ),
+            ),
           ],
         ),
       ),
