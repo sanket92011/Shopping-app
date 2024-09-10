@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_app/models/products_model.dart';
+import 'package:shopping_app/provider/CartProvider.dart';
 
 class ProductsDetailsPage extends StatefulWidget {
   const ProductsDetailsPage({super.key, required this.product});
@@ -13,9 +15,39 @@ class ProductsDetailsPage extends StatefulWidget {
 class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
   late int selectedSize = 0;
 
+  @override
   void initState() {
     super.initState();
     selectedSize;
+  }
+
+  void onTap() {
+    if (selectedSize != 0) {
+      Provider.of<CartProvider>(context, listen: false).addProduct({
+        'id': widget.product['id'],
+        'title': widget.product['title'],
+        'price': widget.product['price'],
+        'imageUrl': widget.product['imageUrl'],
+        'company': widget.product['company'],
+        'sizes': selectedSize,
+      });
+      debugPrint("Button pressed");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Text(
+                widget.product['title'].toString(),
+              ),
+              const Text(" Added to cart")
+            ],
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Please select size")));
+    }
   }
 
   @override
@@ -91,9 +123,7 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
                   child: SizedBox(
                     height: 50,
                     child: FilledButton(
-                        onPressed: () {
-                          debugPrint("Button pressed");
-                        },
+                        onPressed: onTap,
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

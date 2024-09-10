@@ -16,6 +16,14 @@ final products = [
     'sizes': [9, 10, 12],
   },
   {
+    'id': '1',
+    'title': 'Addidas Shoes',
+    'price': 20.12,
+    'imageUrl': 'assets/images/2.png',
+    'company': 'Addidas',
+    'sizes': [9, 10, 12],
+  },
+  {
     'id': '2',
     'title': 'Bata Women\'s Shoes',
     'price': 28.95,
@@ -25,20 +33,10 @@ final products = [
   },
   {
     'id': '3',
-    'title': 'Jordan Shoes',
+    'title': 'Bata Shoes',
     'price': 420.69,
     'imageUrl': 'assets/images/4.png',
-    'company': 'Nike',
+    'company': 'Bata',
     'sizes': [8, 9, 10],
   },
-];
-final cart = [
-  {
-    'id': '3',
-    'title': 'Jordan Shoes',
-    'price': 420.69,
-    'imageUrl': 'assets/images/4.png',
-    'company': 'Nike',
-    'sizes': '8',
-  }
 ];
