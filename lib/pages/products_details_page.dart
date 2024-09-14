@@ -65,7 +65,12 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
           Container(
             color: Colors.transparent,
             child: Column(
-              children: [Image.asset(widget.product['imageUrl'].toString())],
+              children: [
+                Image.asset(
+                  widget.product['imageUrl'].toString(),
+                  height: 250,
+                )
+              ],
             ),
           ),
           const Spacer(flex: 2),

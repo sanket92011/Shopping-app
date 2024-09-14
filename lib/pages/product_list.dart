@@ -31,7 +31,6 @@ class _CollectionState extends State<ProductList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedChip = filters[0];
   }
@@ -100,24 +99,55 @@ class _CollectionState extends State<ProductList> {
           ),
           if (selectedChip == filters[0])
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  return ProductCard(
-                      onClick: () {
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (context) {
-                              return ProductsDetailsPage(product: product);
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  if (constraints.maxWidth > 1080) {
+                    return GridView.builder(
+                      itemCount: products.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, childAspectRatio: 1.75),
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+                        return ProductCard(
+                            onClick: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) {
+                                    return ProductsDetailsPage(
+                                        product: product);
+                                  },
+                                ),
+                              );
                             },
-                          ),
-                        );
+                            productName: product['title'] as String,
+                            productPrice: product['price'].toString(),
+                            productImage: product['imageUrl'] as String);
                       },
-                      productName: product['title'] as String,
-                      productPrice: product['price'].toString(),
-                      productImage: product['imageUrl'] as String);
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+                        return ProductCard(
+                            onClick: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) {
+                                    return ProductsDetailsPage(
+                                        product: product);
+                                  },
+                                ),
+                              );
+                            },
+                            productName: product['title'] as String,
+                            productPrice: product['price'].toString(),
+                            productImage: product['imageUrl'] as String);
+                      },
+                      itemCount: products.length,
+                    );
+                  }
                 },
-                itemCount: products.length,
               ),
             ),
           if (selectedChip == filters[1])
